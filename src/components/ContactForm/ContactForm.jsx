@@ -1,43 +1,47 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { v4 as uuidv4 } from "uuid";
-import s from "./ContactForm.module.css";
-export default function ContactForm({ onSubmit }) {
-  const [name, setName] = useState("");
-  const [number, setNumber] = useState("");
+import React, { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { useDispatch } from 'react-redux';
+import s from './ContactForm.module.css';
+import contactsActions from '../../redux/contacts/contacts-actions';
+
+export default function ContactForm() {
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
+
+  const dispatch = useDispatch();
 
   const clearState = () => {
-    setName("");
-    setNumber("");
+    setName('');
+    setNumber('');
   };
 
-  const onChangeHandler = (e) => {
+  const onChangeHandler = e => {
     const { name, value } = e.currentTarget;
     switch (name) {
-      case "name":
+      case 'name':
         setName(value);
         break;
-      case "number":
+      case 'number':
         setNumber(value);
         break;
       default:
         return;
     }
   };
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = e => {
     e.preventDefault();
     const { name, number } = e.currentTarget;
     if (name.value.length === 0) {
-      alert("Please, fill name");
+      alert('Please, fill name');
     } else if (number.value.length === 0) {
-      alert("Please, fill phone number");
+      alert('Please, fill phone number');
     } else {
       const newContact = {
         name: name.value,
         number: number.value,
         id: uuidv4(),
       };
-      onSubmit(newContact);
+      dispatch(contactsActions.addContact(newContact));
       clearState();
     }
   };
@@ -71,7 +75,3 @@ export default function ContactForm({ onSubmit }) {
     </form>
   );
 }
-
-ContactForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};

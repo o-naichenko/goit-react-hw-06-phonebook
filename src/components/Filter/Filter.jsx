@@ -1,37 +1,27 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import s from './Filter.module.css';
+import contactsActions from '../../redux/contacts/contacts-actions';
 
-class Filter extends Component {
-  state = {
-    filter: '',
-  };
-  static propTypes = {
-    onChange: PropTypes.func.isRequired,
-  };
-  onChangeHandler = e => {
-    const { name, value } = e.currentTarget;
-    this.setState({
-      [name]: value,
-    });
-    this.props.onChange(value);
-  };
-  render() {
-    const { filter } = this.state;
-    return (
-      <label className={s.label}>
-        <span>Find contacts by name</span>
-        <input
-          className={s.input}
-          type="text"
-          name="filter"
-          value={filter}
-          placeholder="Type name here"
-          onChange={this.onChangeHandler}
-        ></input>
-      </label>
-    );
-  }
-}
+const Filter = () => {
+  const dispatch = useDispatch();
+  const value = useSelector(state => state.filter.value);
+  return (
+    <label className={s.label}>
+      <span>Find contacts by name</span>
+      <input
+        className={s.input}
+        type="text"
+        name="filter"
+        value={value}
+        placeholder="Type name here"
+        onChange={e => {
+          dispatch(contactsActions.changeFilter(e.target.value));
+          console.log(e.target.value);
+        }}
+      ></input>
+    </label>
+  );
+};
 
 export default Filter;
