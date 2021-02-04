@@ -4,7 +4,7 @@ import s from './App.module.css';
 import ContactForm from './components/ContactForm';
 import Filter from './components/Filter';
 import ContactList from './components/ContactList';
-function App({ contacts, filter, setContacts, setFilter }) {
+function App() {
   return (
     <div className={s.App}>
       <h1 className={s.header}>Phonebook</h1>
