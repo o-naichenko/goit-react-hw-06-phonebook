@@ -2,11 +2,11 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import s from './Filter.module.css';
 import contactsActions from '../../redux/contacts/contacts-actions';
-import { getValue } from '../../redux/contacts/contacts-selectors';
+import { getFilter } from '../../redux/contacts/contacts-selectors';
 
 const Filter = () => {
   const dispatch = useDispatch();
-  const value = useSelector(getValue);
+  const value = useSelector(getFilter);
   return (
     <label className={s.label}>
       <span>Find contacts by name</span>
